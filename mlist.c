@@ -31,7 +31,7 @@ MList *create_list()
 {
 	MList *new_list = malloc(sizeof(MList));
 	new_list->size = 0;
-	new_list->head = create_node(-1000);
+	new_list->head = new_list->tail = create_node(NULL);
 
 	return new_list;
 }
@@ -44,14 +44,11 @@ void delete_list(MList *list)
 void add_element(MList *list, int element)
 {
 	int i;
-	MNode *node = list->head;
-	for(i=0; i<list->size; i++)
-	{
-		node = node->next;
-	}
+	MNode *node = create_node(element);
 
-	list->size = i+1;
-	node->next = create_node(element);
+	list->tail->next = node;
+	list->tail = node;
+	list->size = list->size+1;
 }
 
 int retrieve_element(MList *list, int element)
