@@ -1,7 +1,6 @@
 #include "mlist.h"
 
 #include <stdlib.h>
-#include <stdio.h>
 
 /**
 Struct definition
