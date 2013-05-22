@@ -2,6 +2,17 @@
 
 #include <stdio.h>
 
+void print_list(MList *list)
+{
+	int i, j;
+	int size = get_size(list);
+	for(i=0; i<size; i++)
+	{
+		j = retrieve_element(list, i);
+		printf("Node %d in list: %d\n", i, j);
+	}
+}
+
 int main(void)
 {
 	printf("Creating list\n");
@@ -19,14 +30,23 @@ int main(void)
 	int list_size = get_size(list);
 	printf("List size: %d\n", list_size);
 
-	int j;
-	for(i=0; i<10; i++)
-	{
-		j = retrieve_element(list, i);
-		printf("Node in list: %d\n", j);
-	}
+	int first_elem = get_first_element(list);
+	printf("First element: %d\n", first_elem);
 
-	j=retrieve_element(list, 1);
+	print_list(list);
+
+	if(contains(list, 3))
+	{
+		printf("the list contains the number 3\n");
+	}
+	else
+	{
+		printf("the list does not contain the number 3\n");
+	}
+	if(!contains(list, -3))
+	{
+		printf("the list does not contain the number -3\n");
+	}
 
 	printf("Deleting list\n");
 	delete_list(list);

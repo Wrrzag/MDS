@@ -31,7 +31,7 @@ MList *create_list()
 {
 	MList *new_list = malloc(sizeof(MList));
 	new_list->size = 0;
-	new_list->head = new_list->tail = create_node(NULL);
+	new_list->head = new_list->tail = NULL;
 
 	return new_list;
 }
@@ -46,9 +46,32 @@ void add_element(MList *list, int element)
 	int i;
 	MNode *node = create_node(element);
 
-	list->tail->next = node;
-	list->tail = node;
-	list->size = list->size+1;
+	if(list->head == NULL)
+	{
+		list->head = list->tail = node;
+	}
+	else
+	{
+		list->tail->next = node;
+		list->tail = node;
+	}
+
+	list->size++;
+}
+
+int contains(MList *list, int element)
+{
+	MNode *node;
+
+	for(node = list->head; node != NULL; node = node->next)
+	{
+		if(node->info == element)
+		{
+			return 1;
+		}
+	}
+
+	return 0;
 }
 
 int retrieve_element(MList *list, int element)
@@ -56,14 +79,9 @@ int retrieve_element(MList *list, int element)
 	int i;
 	MNode *node = list->head;
 
-	for(i=0; i<element+1; i++)
+	for(i=0; i<element; i++)
 	{
 		node = node->next;
-	}
-
-	if(list->head == node)
-	{
-		return -1;
 	}
 
 	return node->info;
@@ -71,7 +89,7 @@ int retrieve_element(MList *list, int element)
 
 int get_first_element(MList *list)
 {
-	return retrieve_element(list, 1);
+	return list->head->info;
 }
 
 int get_size(MList *list)
