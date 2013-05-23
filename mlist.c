@@ -100,7 +100,7 @@ int get_size(MList *list)
 MNode *create_node(void *element)
 {
 	MNode *node = malloc(sizeof(MNode));
-	node->info = element;
+	node->info = (float *)element;
 	node->next = NULL;
 
 	return node;

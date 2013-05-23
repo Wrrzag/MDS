@@ -4,12 +4,13 @@
 
 void print_list(MList *list)
 {
-	int i, j;
+	int i;
 	int size = get_size(list);
+  float *j;
 	for(i=0; i<size; i++)
 	{
-		j = retrieve_element(list, (void *)i);
-		printf("Node %d in list: %d\n", i, j);
+		j = retrieve_element(list, i);
+		printf("Node %d in list: %f\n", i, *j);
 	}
 }
 
@@ -20,18 +21,19 @@ int main(void)
 	printf("List created\n");
 
 	printf("Adding elements\n");
-	int i;
-	for(i=0; i<10; i++)
+	float i;
+	for(i=0; i<10.0; i++)
 	{
-		add_element(list, i);
+    void *p = &i;
+		add_element(list, p);
 	}
 	printf("Elements added\n");
 
 	int list_size = get_size(list);
 	printf("List size: %d\n", list_size);
 
-	int first_elem = get_first_element(list);
-	printf("First element: %d\n", first_elem);
+	float *first_elem = get_first_element(list);
+	printf("First element: %f\n", *first_elem);
 
 	print_list(list);
 
