@@ -8,8 +8,8 @@ Struct definition
 typedef struct _mnode
 {
 	struct _mnode *next;
-	//void *info;
-	int info;
+	void *info;
+	//int info;
 } MNode;
 
 typedef struct _mlist
@@ -22,7 +22,7 @@ typedef struct _mlist
 /**
 Private methods declaration
 **/
-MNode *create_node(int);
+MNode *create_node(void*);
 
 /**
 List handling methods
@@ -41,9 +41,8 @@ void delete_list(MList *list)
 	free(list);
 }
 
-void add_element(MList *list, int element)
+void add_element(MList *list, void *element)
 {
-	int i;
 	MNode *node = create_node(element);
 
 	if(list->head == NULL)
@@ -59,7 +58,7 @@ void add_element(MList *list, int element)
 	list->size++;
 }
 
-int contains(MList *list, int element)
+int contains(MList *list, void *element)
 {
 	MNode *node;
 
@@ -74,7 +73,7 @@ int contains(MList *list, int element)
 	return 0;
 }
 
-int retrieve_element(MList *list, int element)
+void *retrieve_element(MList *list, int element)
 {
 	int i;
 	MNode *node = list->head;
@@ -87,7 +86,7 @@ int retrieve_element(MList *list, int element)
 	return node->info;
 }
 
-int get_first_element(MList *list)
+void *get_first_element(MList *list)
 {
 	return list->head->info;
 }
@@ -98,7 +97,7 @@ int get_size(MList *list)
 }
 
 /****/
-MNode *create_node(int element)
+MNode *create_node(void *element)
 {
 	MNode *node = malloc(sizeof(MNode));
 	node->info = element;

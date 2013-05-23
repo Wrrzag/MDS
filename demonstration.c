@@ -8,7 +8,7 @@ void print_list(MList *list)
 	int size = get_size(list);
 	for(i=0; i<size; i++)
 	{
-		j = retrieve_element(list, i);
+		j = retrieve_element(list, (void *)i);
 		printf("Node %d in list: %d\n", i, j);
 	}
 }
