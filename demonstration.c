@@ -24,8 +24,7 @@ int main(void)
 	float i;
 	for(i=0; i<10.0; i++)
 	{
-    void *p = &i;
-		add_element(list, p);
+		add_element(list, &i, sizeof(float));
 	}
 	printf("Elements added\n");
 
@@ -36,19 +35,6 @@ int main(void)
 	printf("First element: %f\n", *first_elem);
 
 	print_list(list);
-
-	if(contains(list, 3))
-	{
-		printf("the list contains the number 3\n");
-	}
-	else
-	{
-		printf("the list does not contain the number 3\n");
-	}
-	if(!contains(list, -3))
-	{
-		printf("the list does not contain the number -3\n");
-	}
 
 	printf("Deleting list\n");
 	delete_list(list);

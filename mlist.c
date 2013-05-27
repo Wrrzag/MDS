@@ -1,6 +1,7 @@
 #include "mlist.h"
 
 #include <stdlib.h>
+#include <string.h>
 
 /**
 Struct definition
@@ -22,7 +23,7 @@ typedef struct _mlist
 /**
 Private methods declaration
 **/
-MNode *create_node(void*);
+MNode *create_node(void*, size_t);
 
 /**
 List handling methods
@@ -41,9 +42,9 @@ void delete_list(MList *list)
 	free(list);
 }
 
-void add_element(MList *list, void *element)
+void add_element(MList *list, void *element, size_t size)
 {
-	MNode *node = create_node(element);
+	MNode *node = create_node(element, size);
 
 	if(list->head == NULL)
 	{
@@ -97,10 +98,11 @@ int get_size(MList *list)
 }
 
 /****/
-MNode *create_node(void *element)
+MNode *create_node(void *element, size_t size)
 {
 	MNode *node = malloc(sizeof(MNode));
-	node->info = (float *)element;
+  node->info = malloc(size);
+  memcpy(node->info, element, size);
 	node->next = NULL;
 
 	return node;
