@@ -10,7 +10,6 @@ typedef struct _mnode
 {
 	struct _mnode *next;
 	void *info;
-	//int info;
 } MNode;
 
 typedef struct _mlist
