@@ -14,6 +14,11 @@ void print_list(MList *list)
 	}
 }
 
+int float_equals(float *x, float *y)
+{
+  return *x == *y ? 1 : 0;
+}
+
 int main(void)
 {
 	printf("Creating list\n");
@@ -32,7 +37,18 @@ int main(void)
 	printf("List size: %d\n", list_size);
 
 	float *first_elem = get_first_element(list);
-	printf("First element: %f\n", *first_elem);
+	first_elem != NULL ? printf("First element: %f\n", *first_elem) : printf("empty list\n");
+
+	print_list(list);
+
+  i=4;
+  delete_element(list, &i, (int (*)(void *, void *))float_equals);
+
+	list_size = get_size(list);
+	printf("List size: %d\n", list_size);
+
+	first_elem = get_first_element(list);
+	first_elem != NULL ? printf("First element: %f\n", *first_elem) : printf("empty list\n");
 
 	print_list(list);
 

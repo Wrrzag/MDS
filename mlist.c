@@ -9,7 +9,7 @@ Struct definition
 typedef struct _mnode
 {
 	struct _mnode *next;
-	void *info;
+	void *data;
 } MNode;
 
 typedef struct _mlist
@@ -64,7 +64,7 @@ int contains(MList *list, void *element)
 
 	for(node = list->head; node != NULL; node = node->next)
 	{
-		if(node->info == element)
+		if(node->data == element)
 		{
 			return 1;
 		}
@@ -83,12 +83,53 @@ void *retrieve_element(MList *list, int element)
 		node = node->next;
 	}
 
-	return node->info;
+	return node->data;
+}
+
+void delete_element(MList *list, void *data, int (*cmp_funct)(void*, void*))
+{
+  MNode *node, *prev;
+
+  for(node = prev = list->head; node != NULL; prev = node, node = node->next)
+  {
+    if((*cmp_funct)(node->data, data))
+    {
+      if(list->head == node)
+      {
+        if(node->next != NULL)
+        {
+          list->head = node->next;
+          free(node);
+          node = NULL;
+        }
+        else
+        {
+          free(node);
+          list->head = list->tail = node = NULL;
+        }
+      }
+      else if(list->tail == node)
+      {
+        list->tail = prev;
+        free(node);
+        prev->next = node = NULL;
+      }
+      else
+      {
+        prev->next = node->next;
+        free(node);
+        node = NULL;
+      }
+
+      list->size--;
+      break;
+    }
+  }
 }
 
 void *get_first_element(MList *list)
 {
-	return list->head->info;
+	return list->head ? list->head->data : NULL;
 }
 
 int get_size(MList *list)
@@ -100,8 +141,8 @@ int get_size(MList *list)
 MNode *create_node(void *element, size_t size)
 {
 	MNode *node = malloc(sizeof(MNode));
-  node->info = malloc(size);
-  memcpy(node->info, element, size);
+  node->data = malloc(size);
+  memcpy(node->data, element, size);
 	node->next = NULL;
 
 	return node;
